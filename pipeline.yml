@@ -13,7 +13,7 @@ jobs:
   serial: true
   plan:
   - get: git-rsyslog-build-docker-image
-    trigger: true
+    trigger: false
   - put: docker-image
     params:
       build: git-rsyslog-build-docker-image/ci
@@ -44,16 +44,16 @@ jobs:
         outputs:
         - {name: "src"}
 
-    - task: gh-rsyslog-modules-release
-      config:
-        platform: linux
-        image: {{docker-hub-task-image}}
-        inputs:
-          - name: "src"
-        run:
-          path: find
-          args:
-            - .
+    # - task: gh-rsyslog-modules-release
+    #   config:
+    #     platform: linux
+    #     image: {{docker-hub-task-image}}
+    #     inputs:
+    #       - name: "src"
+    #     run:
+    #       path: find
+    #       args:
+    #         - .
     # - put: gh-rsyslog-modules-release
     #   params:
     #     name: src/name

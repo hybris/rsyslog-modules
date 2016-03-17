@@ -19,6 +19,7 @@ sh autogen.sh
 ./configure
 make && make install
 
+git --version
 
 git clone https://github.com/rsyslog/rsyslog.git /tmp/rsyslog
 cd /tmp/rsyslog

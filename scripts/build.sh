@@ -55,3 +55,5 @@ if [ "x$( git tag --list ${latest_rsyslog_tag} )" == "x" ]; then
 
 
 fi
+
+find .

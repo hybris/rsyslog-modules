@@ -51,7 +51,7 @@ if [ "x$( git tag --list ${latest_rsyslog_tag} )" = "x" ]; then
     --repo rsyslog-modules \
     --tag ${latest_rsyslog_tag} \
     --name "omkakfa.so" \
-    --file /tmp/rsyslog
+    --file /tmp/rsyslog/omkakfa.so
 
 
 fi

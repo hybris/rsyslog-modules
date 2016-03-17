@@ -38,6 +38,7 @@ jobs:
           args: []
         params:
           rsyslog_release: "gh-rsyslog-release"
+          GITHUB_TOKEN: {{github-access-token}}
           output_folder: "src"
 
         outputs:

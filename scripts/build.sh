@@ -1,8 +1,13 @@
 #!/usr/bin/env bash
 
-set -e
+set -ex
 
-RSYSLOG_VERSION=${RSYSLOG_VERSION:-""}
+ROOT=$PWD
+DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )"/.. && pwd )
+cd $DIR
+
+
+RSYSLOG_VERSION=`cat $ROOT/$rsyslog_release/tag`
 
 git clone https://github.com/rsyslog/liblogging.git /tmp/liblogging
 cd /tmp/liblogging
@@ -16,14 +21,14 @@ sh autogen.sh
 ./configure
 make && make install
 
-git clone https://github.com/rsyslog/rsyslog.git /tmp/rsyslog
+tar zxvf $ROOT/$rsyslog_release/source.tar.gz -C /tmp/rsyslog
 cd /tmp/rsyslog
-if [ "${RSYSLOG_VERSION}" != "" ]; then
-  git checkout -b ${RSYSLOG_VERSION} refs/tags/${RSYSLOG_VERSION}
-fi
 ./autogen.sh --enable-omkafka --disable-generate-man-pages --prefix=/rsyslog_tmp
 make && make install
 
 
 # copy modules to shared volume
-cp /rsyslog_tmp/lib/rsyslog/omkafka.so /rsyslog_libs
+cp /rsyslog_tmp/lib/rsyslog/omkafka.so ${output_folder}
+cp $ROOT/$rsyslog_release/tag ${output_folder}
+cp $ROOT/$rsyslog_release/tag ${output_folder}/name
+touch ${output_folder}/note.md

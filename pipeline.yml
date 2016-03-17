@@ -1,4 +1,12 @@
 ---
+groups:
+- name: build
+  jobs:
+  - build-rsyslog-module
+- name: ci-image
+  jobs:
+  - build-docker-image
+
 jobs:
 - name: build-docker-image
   public: true
@@ -10,13 +18,55 @@ jobs:
     params:
       build: git-rsyslog-build-docker-image/ci
 
+- name: build-rsyslog-module
+  plan:
+    - get: git-rsyslog-modules
+      trigger: false
+    - get: gh-rsyslog-release
+      trigger: true
+      params:
+        include_source_tarball: true
+
+    - task: create-final-release
+      config:
+        platform: linux
+        image: {{docker-hub-task-image}}
+        inputs:
+        - {name: git-rsyslog-modules}
+        - {name: gh-rsyslog-release}
+        run:
+          path: ./git-rsyslog-modules/scripts/build.sh
+          args: []
+        params:
+          rsyslog_release: "gh-rsyslog-release"
+          output_folder: "src"
+
+        outputs:
+        - {name: "src"}
+
+    - task: gh-rsyslog-modules-release
+      config:
+        platform: linux
+        image: {{docker-hub-task-image}}
+        inputs:
+          - name: "src"
+        run:
+          path: find
+          args:
+            - .
+    # - put: gh-rsyslog-modules-release
+    #   params:
+    #     name: src/name
+    #     tag: src/tag
+    #     body: src/note.md
+    #     globs:
+    #     - src/*.so
 
 resources:
 - name: git-rsyslog-build-docker-image
   type: git
   source:
     uri: {{pipeline-git-repo}}
-    private_key: {{github-access-token}}
 
 - name: docker-image
   type: docker-image
@@ -25,3 +75,21 @@ resources:
     username: {{docker-hub-username}}
     password: {{docker-hub-password}}
     repository: {{docker-create-hub-task-image}}
+
+- name: gh-rsyslog-release
+  type: github-release
+  source:
+    user: rsyslog
+    repository: rsyslog
+
+- name: gh-rsyslog-modules-release
+  type: github-release
+  source:
+    user: hybris
+    repository: rsyslog-modules
+    access_token: {{github-access-token}}
+
+- name: git-rsyslog-modules
+  type: git
+  source:
+    uri: {{pipeline-git-repo}}

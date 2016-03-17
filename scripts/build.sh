@@ -26,7 +26,7 @@ latest_rsyslog_tag=`git tag --sort=-v:refname --list | head -1`
 
 cd $DIR
 
-if [ "x$( git tag --list ${latest_rsyslog_tag} )" = "x" ]; then
+if [ "x$( git tag --list ${latest_rsyslog_tag} )" == "x" ]; then
 
   cd /tmp/rsyslog
 

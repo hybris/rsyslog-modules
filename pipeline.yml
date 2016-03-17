@@ -16,7 +16,7 @@ resources:
   type: git
   source:
     uri: {{pipeline-git-repo}}
-    private_key: {{github-private-key}}
+    private_key: {{github-access-token}}
 
 - name: docker-image
   type: docker-image
@@ -24,4 +24,4 @@ resources:
     email: {{docker-hub-email}}
     username: {{docker-hub-username}}
     password: {{docker-hub-password}}
-    repository: {{docker-create-concourse-go-image}}
+    repository: {{docker-create-hub-task-image}}

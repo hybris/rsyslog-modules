@@ -22,10 +22,10 @@ jobs:
   plan:
     - get: git-rsyslog-modules
       trigger: false
-    - get: gh-rsyslog-release
-      trigger: true
-      params:
-        include_source_tarball: true
+    # - get: gh-rsyslog-release
+    #   trigger: true
+    #   params:
+    #     include_source_tarball: true
 
     - task: create-final-release
       config:
@@ -33,7 +33,6 @@ jobs:
         image: {{docker-hub-task-image}}
         inputs:
         - {name: git-rsyslog-modules}
-        - {name: gh-rsyslog-release}
         run:
           path: ./git-rsyslog-modules/scripts/build.sh
           args: []

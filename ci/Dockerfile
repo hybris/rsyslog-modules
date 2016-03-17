@@ -1,9 +1,5 @@
 FROM ubuntu:trusty
 
-ENV RSYSLOG_VERSION=
-
-# --no-install-recommends
-
 RUN apt-get update && apt-get install -y \
       git \
       build-essential \
@@ -22,10 +18,3 @@ RUN apt-get update && apt-get install -y \
     apt-get clean && \
     apt-get autoremove && \
     rm -rf /var/lib/apt/lists/*
-
-
-# VOLUME ["/rsyslog_libs"]
-#
-# COPY build.sh /
-#
-# ENTRYPOINT ["/build.sh"]

@@ -26,7 +26,7 @@ latest_rsyslog_tag=`git tag --sort=-v:refname --list | head -1`
 
 cd $DIR
 
-if [ "x$( git tag --list ${latest_rsyslog_tag} )" == "x" ]; then
+# if [ "x$( git tag --list ${latest_rsyslog_tag} )" == "x" ]; then
 
   cd /tmp/rsyslog
 
@@ -39,21 +39,22 @@ if [ "x$( git tag --list ${latest_rsyslog_tag} )" == "x" ]; then
   # cp $ROOT/$rsyslog_release/tag ${output_folder}/name
   # touch ${output_folder}/note.md
 
+
+  find .
+
   # Create release
-  github-release release \
-    --user hybris \
-    --repo rsyslog-modules \
-    --tag ${latest_rsyslog_tag} \
-    --name "${latest_rsyslog_tag}"
+  # github-release release \
+  #   --user hybris \
+  #   --repo rsyslog-modules \
+  #   --tag ${latest_rsyslog_tag} \
+  #   --name "${latest_rsyslog_tag}"
+  #
+  # github-release upload \
+  #   --user hybris \
+  #   --repo rsyslog-modules \
+  #   --tag ${latest_rsyslog_tag} \
+  #   --name "omkakfa.so" \
+  #   --file /tmp/rsyslog/omkakfa.so
 
-  github-release upload \
-    --user hybris \
-    --repo rsyslog-modules \
-    --tag ${latest_rsyslog_tag} \
-    --name "omkakfa.so" \
-    --file /tmp/rsyslog/omkakfa.so
 
-
-fi
-
-find .
+# fi

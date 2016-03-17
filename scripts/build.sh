@@ -34,16 +34,24 @@ if [ "x$( git tag --list ${latest_rsyslog_tag} )" != "x" ]; then
   ./autogen.sh --enable-omkafka --disable-generate-man-pages --prefix=/rsyslog_tmp
   make && make install
 
-  cp /rsyslog_tmp/lib/rsyslog/omkafka.so ${output_folder}
-  cp $ROOT/$rsyslog_release/tag ${output_folder}
-  cp $ROOT/$rsyslog_release/tag ${output_folder}/name
-  touch ${output_folder}/note.md
+  # cp /rsyslog_tmp/lib/rsyslog/omkafka.so ${output_folder}
+  # cp $ROOT/$rsyslog_release/tag ${output_folder}
+  # cp $ROOT/$rsyslog_release/tag ${output_folder}/name
+  # touch ${output_folder}/note.md
+
+  # Create release
+  github-release release \
+    --user hybris \
+    --repo rsyslog-modules \
+    --tag ${latest_rsyslog_tag} \
+    --name "${latest_rsyslog_tag}"
+
+  github-release upload \
+    --user hybris \
+    --repo rsyslog-modules \
+    --tag ${latest_rsyslog_tag} \
+    --name "omkakfa.so" \
+    --file ${output_folder}
+
 
 fi
-
-
-
-
-
-
-# copy modules to shared volume

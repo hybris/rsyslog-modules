@@ -54,7 +54,7 @@ if [ "x$( git tag --list ${latest_rsyslog_tag} )" == "x" ]; then
     --user hybris \
     --repo rsyslog-modules \
     --tag ${latest_rsyslog_tag} \
-    --name "omkakfa.so" \
+    --name "omkafka.so" \
     --file /tmp/rsyslog/lib/rsyslog/omkafka.so
 
 

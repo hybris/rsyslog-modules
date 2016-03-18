@@ -9,7 +9,7 @@ cd $DIR
 
 git --version
 
-exit 0;
+# exit 0;
 
 git clone https://github.com/rsyslog/liblogging.git /tmp/liblogging
 cd /tmp/liblogging

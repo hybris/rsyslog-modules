@@ -1,8 +1,6 @@
 Pipeline for building/testing release
 =====================================
 
-Pipeline running at http://concourse-1937123200.us-east-1.elb.amazonaws.com/pipelines/riemann-boshrelease
-
 Setup pipeline in Concourse
 ---------------------------
 

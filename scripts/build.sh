@@ -7,6 +7,10 @@ DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )"/.. && pwd )
 cd $DIR
 
 
+git --version
+
+exit 0;
+
 git clone https://github.com/rsyslog/liblogging.git /tmp/liblogging
 cd /tmp/liblogging
 autoreconf -fvi
@@ -19,8 +23,6 @@ sh autogen.sh
 ./configure
 make && make install
 
-git --version
-
 git clone https://github.com/rsyslog/rsyslog.git /tmp/rsyslog
 cd /tmp/rsyslog
 latest_rsyslog_tag=`git tag --sort=-v:refname --list | head -1`
@@ -31,7 +33,8 @@ if [ "x$( git tag --list ${latest_rsyslog_tag} )" == "x" ]; then
 
   cd /tmp/rsyslog
 
-  git checkout -b ${latest_rsyslog_tag} refs/tags/${latest_rsyslog_tag}
+  git checkout -b ${latest_rsyslog_tag}
+
   ./autogen.sh --enable-omkafka --disable-generate-man-pages --prefix=/tmp/rsyslog
   make && make install
 
@@ -40,10 +43,7 @@ if [ "x$( git tag --list ${latest_rsyslog_tag} )" == "x" ]; then
   # cp $ROOT/$rsyslog_release/tag ${output_folder}/name
   # touch ${output_folder}/note.md
 
-
-  find .
-
-  Create release
+  # Create release
   github-release release \
     --user hybris \
     --repo rsyslog-modules \
